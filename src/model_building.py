@@ -5,10 +5,10 @@ from sklearn.linear_model import LogisticRegression
 
 from src import setup_logger
 
-logger = setup_logger(__name__, log_file='data_loader.log', level=logging.DEBUG)
+logger = setup_logger(__name__, log_file='model_building.log', level=logging.DEBUG)
 logger.debug('src package initialized successfully.')
 
-from src.utils import loading_data, save_model
+from src.utils import loading_data, save_sklearn_model
 
 
 def create_model(x_train, y_train):
@@ -39,5 +39,5 @@ if __name__ == '__main__':
     logger.info(f'Model accuracy: {accuracy:.2f}')
     logger.debug('Model accuracy logged successfully.')
 
-    save_model(model, 'LG/logistic_regression_model.pkl')
+    save_sklearn_model(model, 'LG/logistic_regression_model.pkl')
 

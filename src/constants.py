@@ -32,3 +32,9 @@ class Folders:
     raw = RAW                 # ← FIXED
     interim = INTERIM         # ← FIXED
     processed = PROCESSED     # ← FIXED
+
+# MLflow Constants
+class MLflow:
+    experiment_name = "JobRolePredictionExperiment"
+    run_training = "LogisticRegression_Training"
+    run_evaluation = "LogisticRegression_Evaluation"

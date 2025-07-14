@@ -48,16 +48,6 @@ def timer(func):
     return wrapper
 
 
-# -------------------------------
-# Save / Load Model
-# -------------------------------
-def save_model(model, path: str):
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    joblib.dump(model, path)
-
-
-def load_model(path: str):
-    return joblib.load(path)
 
 
 def save_train_test_data(train_data: pd.DataFrame, test_data: pd.DataFrame, data_path: str, name_train="train.csv",
@@ -127,7 +117,12 @@ def loading_data(data_type: Literal['raw', 'processed', 'interim']) -> Tuple[pd.
         raise
 
 
-def save_model(model, name) -> None:
+# -------------------------------
+# Save / Load Model
+# -------------------------------
+
+
+def save_sklearn_model(model, name:str) -> None:
     """
     Save the trained model to a file.
 
@@ -147,6 +142,36 @@ def save_model(model, name) -> None:
         raise
     except Exception as e:
         logger.error('Error occurred while saving the model: %s', e)
+        raise
+
+
+def load_sklearn_model(location:str):
+    """Load the trained model from a file."""
+    try:
+        file_path = os.path.join(get_project_root(), constants.Folders.models, location)
+        with open(file_path, 'rb') as file:
+            model = pickle.load(file)
+        logger.debug('Model loaded from %s', file_path)
+        return model  # ✅ This line was missing
+    except FileNotFoundError:
+        logger.error('Model file not found: %s', file_path)
+        raise
+    except Exception as e:
+        logger.error('Unexpected error occurred while loading the model: %s', e)
+        raise
+
+
+
+def save_metrics(metrics: dict, file_path: str) -> None:
+    """Save the evaluation metrics to a JSON file."""
+    try:
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+        with open(file_path, 'w') as file:
+            json.dump(metrics, file, indent=4)
+        logger.debug('Metrics saved to %s', file_path)
+    except Exception as e:
+        logger.error('Error saving metrics to file: %s', e)
         raise
 
 # -------------------------------
