@@ -1,0 +1,68 @@
+# -----------------------
+# Python
+# -----------------------
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+*.pkl
+*.h5
+*.joblib
+*.log
+.DS_Store
+
+# -----------------------
+# Jupyter
+# -----------------------
+.ipynb_checkpoints/
+
+# -----------------------
+# PyCharm
+# -----------------------
+.idea/
+*.iml
+
+# -----------------------
+# Virtual Environment
+# -----------------------
+venv/
+env/
+ENV/
+.venv/
+.env
+
+# -----------------------
+# DVC
+# -----------------------
+*.dvc
+.dvc/
+.cache/
+.dvc/cache/
+.dvc/tmp/
+data/raw/
+data/interim/
+
+# -----------------------
+# MLflow
+# -----------------------
+mlruns/
+mlartifacts/
+
+# -----------------------
+# Logs & Temp
+# -----------------------
+logs/
+*.tmp
+
+# -----------------------
+# VSCode (optional)
+# -----------------------
+.vscode/
+
+# -----------------------
+# OS / Misc
+# -----------------------
+Thumbs.db
+ehthumbs.db
+desktop.ini
