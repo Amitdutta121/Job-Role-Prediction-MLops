@@ -22,4 +22,5 @@ def load_data(file_path: str) -> pd.DataFrame:
 
 
 if __name__ == '__main__':
-    df = load_data('https://raw.githubusercontent.com/vikashishere/Datasets/main/spam.csv')
+    df = load_data('https://raw.githubusercontent.com/Amitdutta121/Job-Role-Prediction-MLops/refs/heads/main/data/UpdatedResumeDataSet.csv')
+    logger.info('Data loaded successfully with shape: %s', df.shape)
