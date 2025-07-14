@@ -1,5 +1,6 @@
 import logging
 import os
+import pickle
 
 import pandas as pd
 import yaml
@@ -115,8 +116,8 @@ def loading_data(data_type: Literal['raw', 'processed', 'interim']) -> Tuple[pd.
             test_data = pd.read_csv(os.path.join(data_path, "test_processed.csv"))
         elif data_type == 'interim':
             data_path = os.path.join(get_project_root(), constants.Folders.data, constants.Folders.interim)
-            train_data = pd.read_csv(os.path.join(data_path, "train_processed.csv"))
-            test_data = pd.read_csv(os.path.join(data_path, "test_processed.csv"))
+            train_data = pd.read_csv(os.path.join(data_path, "train_interim.csv"))
+            test_data = pd.read_csv(os.path.join(data_path, "test_interim.csv"))
         else:
             raise ValueError(f"Unknown data type: {data_type}. Expected 'raw', 'processed', or 'interim'.")
         logger.debug('Data loaded successfully from %s', data_path)
@@ -125,6 +126,28 @@ def loading_data(data_type: Literal['raw', 'processed', 'interim']) -> Tuple[pd.
         logger.error('File not found: %s', e)
         raise
 
+
+def save_model(model, name) -> None:
+    """
+    Save the trained model to a file.
+
+    :param model: Trained model object
+    :param file_path: Path to save the model file
+    """
+    try:
+        file_path = os.path.join(get_project_root(), constants.Folders.models, name)
+        # Ensure the directory exists
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+        with open(file_path, 'wb') as file:
+            pickle.dump(model, file)
+        logger.debug('Model saved to %s', file_path)
+    except FileNotFoundError as e:
+        logger.error('File path not found: %s', e)
+        raise
+    except Exception as e:
+        logger.error('Error occurred while saving the model: %s', e)
+        raise
 
 # -------------------------------
 # Save / Load JSON
