@@ -59,14 +59,26 @@ def load_model(path: str):
     return joblib.load(path)
 
 
-def save_data(train_data: pd.DataFrame, test_data: pd.DataFrame, data_path: str) -> None:
-    """Save the train and test datasets."""
+def save_train_test_data(train_data: pd.DataFrame, test_data: pd.DataFrame, data_path: str, name_train="train.csv", name_test="test.csv") -> None:
+    """Save train and test datasets directly to the specified data_path (no 'raw' appended)."""
+    try:
+        os.makedirs(data_path, exist_ok=True)
+        train_data.to_csv(os.path.join(data_path, name_train), index=False)
+        test_data.to_csv(os.path.join(data_path, name_test), index=False)
+        logger.debug('Train and test data saved to %s', data_path)
+    except Exception as e:
+        logger.error('Error saving processed data: %s', e)
+        raise
+
+
+def save_data(data: pd.DataFrame, data_path: str, filename: str) -> None:
+    """Save a single dataset to a specified path and filename."""
     try:
         raw_data_path = os.path.join(data_path, constants.Folders.raw)
         os.makedirs(raw_data_path, exist_ok=True)
-        train_data.to_csv(os.path.join(raw_data_path, "train.csv"), index=False)
-        test_data.to_csv(os.path.join(raw_data_path, "test.csv"), index=False)
-        logger.debug('Train and test data saved to %s', raw_data_path)
+        file_path = os.path.join(raw_data_path, filename)
+        data.to_csv(file_path, index=False)
+        logger.debug('Data saved to %s', file_path)
     except Exception as e:
         logger.error('Unexpected error occurred while saving the data: %s', e)
         raise

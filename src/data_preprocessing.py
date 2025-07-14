@@ -1,10 +1,12 @@
+import os
+
 import pandas as pd
 import string
 from logger_setup import setup_logger
 import logging
 from data_loader import load_data
 import constants
-from src.utils import save_data
+from src.utils import save_train_test_data, save_data, get_project_root
 
 # get file name
 logger = setup_logger(__name__, log_file='data_preprocessing.log', level=logging.DEBUG)
@@ -36,13 +38,22 @@ def clean_data(datadf: pd.DataFrame) -> pd.DataFrame:
         logger.error(f"Error cleaning DataFrame: {e}")
         raise e
 
+
 if __name__ == '__main__':
     try:
-        df = load_data(constants.DATA_SOURCE)
-        cleaned_df = clean_data(df)
-        save_data(cleaned_df, constants.CLEANED_DATA_PATH)
+        train_df = load_data(
+            os.path.join(get_project_root(), constants.Folders.data, constants.Folders.raw, "train.csv"))
+        test_df = load_data(os.path.join(get_project_root(), constants.Folders.data, constants.Folders.raw, "test.csv"))
+        cleaned_train_df = clean_data(train_df)
+        cleaned_test_df = clean_data(test_df)
 
-        logger.info('Data loaded successfully.')
+        # Store the data inside data/processed
+        data_path = os.path.join(get_project_root(), constants.Folders.data, constants.Folders.interim)
+        os.makedirs(data_path, exist_ok=True)
+
+        save_train_test_data(cleaned_train_df, cleaned_test_df,
+                             os.path.join(get_project_root(), constants.Folders.data, constants.Folders.interim), "train_processed.csv", "test_processed.csv")
+        logger.debug('Processed data saved to %s', data_path)
     except Exception as e:
         logger.error(f"Error loading data: {e}")
         raise e

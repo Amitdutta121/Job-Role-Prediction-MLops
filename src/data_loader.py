@@ -7,7 +7,7 @@ from logger_setup import setup_logger
 import logging
 
 from src import get_project_root, constants
-from src.utils import save_data
+from src.utils import save_train_test_data
 
 # get file name
 logger = setup_logger(__name__, log_file='data_loader.log', level=logging.DEBUG)
@@ -37,5 +37,5 @@ if __name__ == '__main__':
     logger.debug('Data loaded successfully from the URL.')
     train_data, test_data = train_test_split(final_df, test_size=test_size, random_state=2)
 
-    save_data(train_data, test_data, data_path)
+    save_train_test_data(train_data, test_data, data_path)
     logger.debug('Train and test data saved successfully.')
