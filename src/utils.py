@@ -1,10 +1,22 @@
+import logging
 import os
+
+import pandas as pd
 import yaml
 import joblib
 import json
 import time
 from pathlib import Path
 from typing import Dict
+
+from src import constants
+from logger_setup import setup_logger
+
+# get file name
+logger = setup_logger(__name__, log_file='data_preprocessing.log', level=logging.DEBUG)
+logger.debug('src package initialized successfully.')
+
+
 
 
 # -------------------------------
@@ -47,6 +59,17 @@ def load_model(path: str):
     return joblib.load(path)
 
 
+def save_data(train_data: pd.DataFrame, test_data: pd.DataFrame, data_path: str) -> None:
+    """Save the train and test datasets."""
+    try:
+        raw_data_path = os.path.join(data_path, constants.Folders.raw)
+        os.makedirs(raw_data_path, exist_ok=True)
+        train_data.to_csv(os.path.join(raw_data_path, "train.csv"), index=False)
+        test_data.to_csv(os.path.join(raw_data_path, "test.csv"), index=False)
+        logger.debug('Train and test data saved to %s', raw_data_path)
+    except Exception as e:
+        logger.error('Unexpected error occurred while saving the data: %s', e)
+        raise
 
 # -------------------------------
 # Save / Load JSON
