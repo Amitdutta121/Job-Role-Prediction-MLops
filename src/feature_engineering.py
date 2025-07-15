@@ -1,18 +1,20 @@
-import pandas as pd
-from logger_setup import setup_logger
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+
 import logging
 from typing import Tuple
 
-from src import get_project_root
-from src.data_loader import load_data
+import pandas as pd
+
+from logger_setup import setup_logger
 from src.utils import loading_data, saving_data
 
 # get file name
 logger = setup_logger(__name__, log_file='data_loader.log', level=logging.DEBUG)
 logger.debug('src package initialized successfully.')
 from sklearn.feature_extraction.text import TfidfVectorizer
-import constants
-import os
 
 
 def apply_tfidf(train_data: pd.DataFrame, test_data: pd.DataFrame, max_features: int) -> Tuple[pd.DataFrame, pd.DataFrame, TfidfVectorizer]:
@@ -53,6 +55,7 @@ def apply_tfidf(train_data: pd.DataFrame, test_data: pd.DataFrame, max_features:
     except Exception as e:
         logger.error('Error during TF-IDF transformation: %s', e)
         raise
+
 
 
 if __name__ == '__main__':

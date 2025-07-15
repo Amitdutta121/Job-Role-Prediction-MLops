@@ -43,6 +43,7 @@ ENV/
 data/raw/
 data/interim/
 data/processed/
+!.dvc
 
 # -----------------------
 # MLflow

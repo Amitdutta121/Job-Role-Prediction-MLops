@@ -1,0 +1,19 @@
+name: job-role-prediction-mlops
+
+conda_env: conda.yaml
+
+entry_points:
+  data_loader:
+    command: python src/data_loader.py
+
+  data_preprocessing:
+    command: python src/data_preprocessing.py
+
+  feature_engineering:
+    command: python src/feature_engineering.py
+
+  model_building:
+    command: python src/model_building.py
+
+  model_evaluation:
+    command: python src/model_evaluation.py

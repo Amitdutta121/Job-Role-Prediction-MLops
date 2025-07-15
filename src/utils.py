@@ -1,10 +1,13 @@
+import os
+import sys
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import logging
 import os
 import pickle
 
 import pandas as pd
 import yaml
-import joblib
 import json
 import time
 from pathlib import Path
@@ -120,6 +123,7 @@ def loading_data(data_type: Literal['raw', 'processed', 'interim']) -> Tuple[pd.
 # -------------------------------
 # Save / Load Model
 # -------------------------------
+
 
 
 def save_sklearn_model(model, name:str) -> None:

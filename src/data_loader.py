@@ -1,4 +1,6 @@
+import sys
 import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -33,7 +35,7 @@ def load_data(file_path: str) -> pd.DataFrame:
 if __name__ == '__main__':
     test_size = 0.2
     data_path = os.path.join(get_project_root(), constants.Folders.data)
-    final_df = load_data('https://raw.githubusercontent.com/Amitdutta121/Job-Role-Prediction-MLops/refs/heads/main/data/UpdatedResumeDataSet.csv')
+    final_df = load_data('https://raw.githubusercontent.com/Amitdutta121/Job-Role-Prediction-MLops/3999f1933732fb8e07e9fea4bfd9f79a0f7b9d97/data/UpdatedResumeDataSet.csv')
     logger.debug('Data loaded successfully from the URL.')
     train_data, test_data = train_test_split(final_df, test_size=test_size, random_state=2)
 

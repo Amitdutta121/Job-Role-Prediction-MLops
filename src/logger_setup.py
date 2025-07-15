@@ -1,6 +1,5 @@
 import os
 import logging
-
 def setup_logger(name=__name__, log_file='app.log', level=logging.INFO):
     logger = logging.getLogger(name)
     if logger.hasHandlers():
